@@ -32,14 +32,13 @@ func (l *LoginLogic) Login(req types.LoginRequest) (resp *types.LoginResponse, e
 		Mobile:   req.Mobile,
 		Password: req.Passowrd,
 	})
-
+	logx.Info(res.Name)
 	if err != nil {
 		return nil, err
 	}
 
 	now := time.Now().Unix()
 	accessExpire := l.svcCtx.Config.Auth.AccessExpire
-
 	accessToken, err := jwtx.GetToken(l.svcCtx.Config.Auth.AccessSecret, now, accessExpire, res.Id)
 
 	if err != nil {

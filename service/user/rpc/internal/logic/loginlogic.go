@@ -31,6 +31,7 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 func (l *LoginLogic) Login(in *user.LoginRequest) (*user.LoginResponse, error) {
 
 	res, err := l.svcCtx.UserModel.FindOneByMobile(in.Mobile)
+
 	if err != nil {
 		if err == model.ErrNotFound {
 			return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "根据手机号查询用户信息失败，mobile:%s,err:%v", in.Mobile, err)
@@ -40,9 +41,11 @@ func (l *LoginLogic) Login(in *user.LoginRequest) (*user.LoginResponse, error) {
 
 	password := cryptx.PasswordEnrypt(l.svcCtx.Config.Salt, in.Password)
 	if password != res.Password {
-		return nil, errors.Wrapf(xerr.NewErrMsg("账号或密码不正确"), "密码匹配出错")
-	}
+		logx.Info(password)
 
+		return nil, errors.Wrapf(xerr.NewErrMsg("账号或密码不正确"), "密码匹配出错")
+
+	}
 	return &user.LoginResponse{
 		Id:     res.Id,
 		Name:   res.Name,

@@ -9,4 +9,5 @@ func TestGenSn(t *testing.T) {
 
 func TestHelloWorld(t *testing.T) {
 	println("hello world")
+
 }

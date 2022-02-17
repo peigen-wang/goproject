@@ -3,7 +3,7 @@ Host: 0.0.0.0
 Port: 8001
 
 Mysql:
-  DataSource: root:123456@tcp(mysql:3306)/mall?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+  DataSource: root:peigen123456@tcp(49.234.127.14:3306)/go-test?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 
 CacheRedis:
 - Host: redis:6379
